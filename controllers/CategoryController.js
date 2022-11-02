@@ -40,9 +40,11 @@ const CategoryController = {
       console.error(error);
       res
         .status(500)
-        .send({ msg: "Hubo un error al reventar la categoria", Category });
+        .send({ msg: "Ups, hubo un error al reventar la categoria", Category });
     }
   },
+
+
 };
 
 
