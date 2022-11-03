@@ -102,16 +102,11 @@ const ProductController = {
     }
   },
 
-  /*async selectDesc (req, res,) {
-    let sql = `SELECT * FROM products ORDER BY price DESC`;
-    db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send(result);
-    })
-    },*/
+  
 
   
 };
+
 
 
 
