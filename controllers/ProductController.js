@@ -13,6 +13,7 @@ const ProductController = {
 
       .catch(console.error);
   },
+  
   async destroyProductById(req, res) {
     try {
       await Product.destroy({
@@ -103,15 +104,16 @@ const ProductController = {
     }
   },
 
-  //Filtro que ordene los productos de mayor a menor precio
+  ProductsOrderDesc(req, res) {
+    Product.findAll({ order: [["price", "DESC"]] })
+      .then((products) => res.send(products))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send({message: "Hubo un problema al traer los productos en orden descendente"});
+      });
+  },
 
-    /*async selectDesc (req, res,) {
-    let sql = `SELECT * FROM products ORDER BY price DESC`;
-    db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send(result);
-    })
-    },*/
+  
 
   //Implementa validación a la hora de crear un producto para que se rellene todos los campos y si no se hace que devuelva un mensaje
     
