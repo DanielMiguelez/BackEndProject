@@ -6,8 +6,7 @@ const ProductController = {
     req.body.role = "product";
     Product.create(req.body)
       .then((Product) =>
-        res.status(201).send({ message: "Producto creado con éxito", Product }),
-        //Product.addOrder(req.body.OrderId)
+        res.status(201).send({ message: "Producto creado con éxito", Product })
       )
       .catch(console.error);
   },
