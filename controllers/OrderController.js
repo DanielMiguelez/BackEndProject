@@ -7,7 +7,8 @@ const OrderController = {
     Order.create(req.body)
 
       .then((order) =>
-        res.status(201).send({ message: "Orden creada con éxito", order })
+        res.status(201).send({ message: "Orden creada con éxito", order }),
+        Order.addOrder(req.body.ProductId)
       )
 
       .catch(console.error);

@@ -1,5 +1,5 @@
-const { Category } = require("../models/index.js");
-
+const { Category, Sequelize, Product } = require("../models/index.js");
+const {Op} = Sequelize
 
 const CategoryController = {
   create(req, res) {
@@ -44,18 +44,28 @@ const CategoryController = {
     }
   },
   
-  // Punto 4 de CRUD CATEGORIAS---------------------------------
-  /*getAll(req, res) {
-    // Post.findAll({ include: [{ model: User, attributes: ["name"] }] })
+  getAllCategories(req, res) {
     Category.findAll()
       .then((categories) => res.send(categories))
       .catch((err) => {
         console.error(err);
         res.status(500).send({message: "Hubo un problema al traer las categorias"});
       });
-  },*/
+  },
 
-  /*async getCategoryById(req, res) {
+  async getCategoriesAndProducts(req, res) {
+    try {
+      const products = await Category.findAll({
+        include: [{ model: products, attributes: ["name"], through: { attributes: [] } }],
+      });
+      res.send({ msg: "Your Products", products });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ msg: "Error while getting Products and categories", error });
+    }
+  },
+
+  async getCategoryById(req, res) {
     try {
       const category = await Category.findByPk(req.params.id, {
       });
@@ -66,9 +76,9 @@ const CategoryController = {
         .status(500)
         .send({ msg: "Hubo un error al obtener la categoria", error });
     }
-  },*/
+  },
 
-  /*async getCategoryByName(req, res) {
+  async getCategoryByName(req, res) {
     try {
       const category = await Category.findOne({
         where: {
@@ -84,7 +94,7 @@ const CategoryController = {
         .status(500)
         .send({ msg: "Hubo un error al buscar la categoria por nombre", err });
     }
-  },*/
+  },
 
 };
 
