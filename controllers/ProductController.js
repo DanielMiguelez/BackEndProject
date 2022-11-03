@@ -4,13 +4,11 @@ const {Op} = Sequelize
 const ProductController = {
   create(req, res) {
     req.body.role = "product";
-
     Product.create(req.body)
-
       .then((Product) =>
         res.status(201).send({ message: "Producto creado con éxito", Product }),
+        //Product.addOrder(req.body.OrderId)
       )
-
       .catch(console.error);
   },
   
