@@ -1,28 +1,20 @@
 const { User } = require("../models/index.js");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
+const { jwt_secret } = require('../config/config.json')['development']
 
 const UserController = {
 
   async create(req, res) {
     try {
+      req.body.role = "user";
       const password = await bcrypt.hash(req.body.password, 10)
       const user = await User.create({...req.body, password})
-      res.send({msg:"user succesfully created", user})
+      res.status(201).send({msg:"user succesfully created", user})
     } catch (error) {
       console.error(error)
       res.status(500).send({message:"Error while creating user ", error})
     }
-
-
-      req.body.role = "user";
-    console.log(req.body)
-    User.create(req.body)
-
-      .then((user) =>
-        res.status(201).send({ message: "Usuario creado con éxito", user })
-      )
-
-      .catch(console.error);
   },
 
 
@@ -51,6 +43,10 @@ const UserController = {
     return res.status(400).send({message:"Usuario o contraseña incorrectos"})
     
     }
+
+    const token = jwt.sign({ id: user.id }, jwt_secret);
+
+  res.send({ message: 'Bienvenid@ ' + user.name, user, token });
     
     res.send(user)
     
