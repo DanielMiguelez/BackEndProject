@@ -1,4 +1,4 @@
-const { Category, Sequelize } = require("../models/index.js");
+const { Category, Sequelize, Product } = require("../models/index.js");
 const {Op} = Sequelize
 
 const CategoryController = {
@@ -53,18 +53,6 @@ const CategoryController = {
       });
   },
 
-  async getCategoriesAndProducts(req, res) {
-    try {
-      const products = await Category.findAll({
-        include: [{ model: products, attributes: ["name"], through: { attributes: [] } }],
-      });
-      res.send({ msg: "Your Products", products });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send({ msg: "Error while getting Products and categories", error });
-    }
-  },
-
   async getCategoryById(req, res) {
     try {
       const category = await Category.findByPk(req.params.id, {
@@ -96,8 +84,18 @@ const CategoryController = {
     }
   },
 
+
+
+async getCategoriesAndProducts(req, res) {
+  try {
+    const categories = await Category.findAll({
+      include: [{ model: Product, attributes: ["name","price"] }],
+    });
+    res.send({ msg: "Your Categories and products", categories });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ msg: "Error while getting Categories with products", error });
+  }}
+
 };
-
-
-
 module.exports = CategoryController;
