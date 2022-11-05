@@ -1,7 +1,10 @@
-const { User } = require("../models/index.js");
+const { User, Token, sequelize } = require("../models/index.js");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const { jwt_secret } = require('../config/config.json')['development']
+const {Op} = sequelize
+
+
 
 const UserController = {
 
@@ -45,14 +48,40 @@ const UserController = {
     }
 
     const token = jwt.sign({ id: user.id }, jwt_secret);
+    Token.create({ token, UserId: user.id });
 
-  res.send({ message: 'Bienvenid@ ' + user.name, user, token });
+  res.send({ message: 'Welcome ' + user.name, user, token });
     
-    res.send(user)
+    
     
     })
     
     },
+
+    async logout(req, res) {
+      try {
+          await Token.destroy({
+              where: {
+                 [Op.and]: [
+                     { UserId: req.user.id },
+                     { token: req.headers.authorization }
+                 ]
+      
+            }
+      
+      });
+      
+      res.send({ message: 'Succesfully disconected' })
+      
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ message: 'There was a problem login out' })
+
+      }
+
+    }
+
+    
 
 };
 
