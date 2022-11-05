@@ -11,13 +11,49 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Product.belongsTo(models.Category);
-    }
+      Product.belongsToMany(models.Order,{
+        through:models.OrderProduct
+        })
+        }
   }
   Product.init({
-    name: DataTypes.STRING,
-    price: DataTypes.FLOAT,
-    description: DataTypes.STRING,
-    CategoryId: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Por favor introduce el nombre",
+        },
+      },
+    },
+    price: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Por favor introduce el precio",
+        },
+      },
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Por favor introduce la descripcion",
+        },
+        
+      },
+    },
+    categoryId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Por favor introduce tu Categoria",
+        },
+      },
+    },
   }, {
     sequelize,
     modelName: 'Product',
