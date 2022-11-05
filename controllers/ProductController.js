@@ -1,14 +1,16 @@
 const { Product , Sequelize} = require("../models/index.js");
-const {Op} = Sequelize
+const {Op} = Sequelize;
+
 
 const ProductController = {
-  create(req, res) {
+  create(req, res, next) {
     req.body.role = "product";
     Product.create(req.body)
       .then((Product) =>
         res.status(201).send({ message: "Producto creado con éxito", Product })
       )
-      .catch(console.error);
+      //.catch(console.error);
+      next(error);
   },
   
   async destroyProductById(req, res) {
