@@ -8,7 +8,7 @@ const {Op} = sequelize
 
 const UserController = {
 
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       req.body.role = "user";
       const password = await bcrypt.hash(req.body.password, 10)
@@ -16,6 +16,7 @@ const UserController = {
       res.status(201).send({msg:"user succesfully created", user})
     } catch (error) {
       console.error(error)
+      next(error)
       res.status(500).send({message:"Error while creating user ", error})
     }
   },

@@ -1,7 +1,9 @@
-const { Category } = require("../models/index.js");
+const { Category, Product, Sequelize } = require("../models/index.js");
+const {Op} = Sequelize
 
 
 const CategoryController = {
+  
   create(req, res) {
     console.log(req.body)
     Category.create(req.body)
@@ -43,19 +45,30 @@ const CategoryController = {
         .send({ msg: "Ups, hubo un error al reventar la categoria", Category });
     }
   },
-  
-  // Punto 4 de CRUD CATEGORIAS---------------------------------
-  /*getAll(req, res) {
-    // Post.findAll({ include: [{ model: User, attributes: ["name"] }] })
-    Category.findAll()
-      .then((categories) => res.send(categories))
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send({message: "Hubo un problema al traer las categorias"});
-      });
-  },*/
 
-  /*async getCategoryById(req, res) {
+  async getCategoriesWithProducts(req, res) {
+    try {
+      const categories = await Category.findAll({
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        include: [
+          { model: Product, attributes: ["name"] },
+         
+        ],
+      });
+      res.status(200).send(categories);
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .send({ msg: "There was an error getting the categories with products", error });
+    }
+  },
+  
+  
+
+  async getCategoryById(req, res) {
     try {
       const category = await Category.findByPk(req.params.id, {
       });
@@ -66,9 +79,9 @@ const CategoryController = {
         .status(500)
         .send({ msg: "Hubo un error al obtener la categoria", error });
     }
-  },*/
+  },
 
-  /*async getCategoryByName(req, res) {
+  async getOneCategoryByName(req, res) {
     try {
       const category = await Category.findOne({
         where: {
@@ -82,10 +95,9 @@ const CategoryController = {
       console.error(error);
       res
         .status(500)
-        .send({ msg: "Hubo un error al buscar la categoria por nombre", err });
+        .send({ msg: "Hubo un error al buscar la categoría", err });
     }
-  },*/
-
+  },
 };
 
 
