@@ -1,43 +1,30 @@
-const { Product, Category , Sequelize} = require("../models/index.js");
-const {Op} = Sequelize
+const { Product, Category, Sequelize } = require("../models/index.js");
+const { Op } = Sequelize;
+
 const ProductController = {
-  create(req, res) {
-    req.body.role = "product";
-
+  create(req, res, next) {
     Product.create(req.body)
-
-      .then((Product) =>
-        res.status(201).send({ message: "Producto creado con éxito", Product })
+      .then((product) =>
+        res.status(201).send({ message: "Producto creado con éxito", product })
       )
 
-      .catch(console.error);
+      .catch(error=>next(error));
   },
 
   getAll(req, res) {
-    // Post.findAll({ include: [{ model: User, attributes: ["name"] }] })
-    Product.findAll()
+    Product.findAll({ include: [{ model: Category, attributes: ["name"] }] })
       .then((products) => res.send(products))
       .catch((err) => {
         console.error(err);
-        res.status(500).send({message: "Hubo un problema al traer los productos con sus categorias"});
+        res
+          .status(500)
+          .send({
+            message:
+              "Hubo un problema al traer los productos con sus categorias",
+          });
       });
   },
 
-  async updateProductById(req, res) {
-    try {
-      await Product.update({name:req.body.name,price:req.body.price,description:req.body.description}, {
-        where: {
-          id: req.params.id,
-        },
-      });
-      res.send({ msg: "Producto actualizado con éxito" });
-    } catch (error) {
-      console.error(err);
-      res
-        .status(500)
-        .send({ msg: "Hubo un error al actualizar el producto", Product });
-    }
-  },
   async destroyProductById(req, res) {
     try {
       await Product.destroy({
@@ -54,19 +41,41 @@ const ProductController = {
     }
   },
 
+  async updateProductById(req, res) {
+    try {
+      await Product.update(
+        {
+          name: req.body.name,
+          price: req.body.price,
+          description: req.body.description,
+        },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      );
+      res.send({ msg: "Producto actualizado con éxito" });
+    } catch (error) {
+      console.error(err);
+      res
+        .status(500)
+        .send({ msg: "Hubo un error al actualizar el producto", Product });
+    }
+  },
+
   async getProductById(req, res) {
     try {
-      const product = await Product.findByPk(req.params.id, {
-      });
+      const product = await Product.findByPk(req.params.id, {});
       res.send(product);
     } catch (error) {
       console.error(err);
       res
         .status(500)
-        .send({ msg: "Hubo un error al crear la publicación", err });
+        .send({ msg: "Hubo un error al crear el producto", err });
     }
   },
-  
+
   async getOneProductByName(req, res) {
     try {
       const product = await Product.findOne({
@@ -79,9 +88,7 @@ const ProductController = {
       res.send(product);
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .send({ msg: "Hubo un error al buscar el producto", err });
+      res.status(500).send({ msg: "Hubo un error al buscar el producto", err });
     }
   },
 
@@ -90,35 +97,27 @@ const ProductController = {
       const product = await Product.findOne({
         where: {
           price: req.params.price,
-          },
-        
+        },
       });
       res.send(product);
     } catch (error) {
       console.error(err);
-      res
-        .status(500)
-        .send({ msg: "Hubo un error al buscar por precio", err });
+      res.status(500).send({ msg: "Hubo un error al buscar por precio", err });
     }
   },
-
-  async selectDesc (req, res,) {
-    let sql = `SELECT * FROM products ORDER BY price DESC`;
-    db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send(result);
-    })
-    },
-
-  
+  ProductsOrderDesc(req, res) {
+    Product.findAll({ order: [["price", "DESC"]] })
+      .then((products) => res.send(products))
+      .catch((err) => {
+        console.error(err);
+        res
+          .status(500)
+          .send({
+            message:
+              "Hubo un problema al traer los productos en orden descendente",
+          });
+      });
+  },
 };
-
-
-
-
-
-
-
-
 
 module.exports = ProductController;

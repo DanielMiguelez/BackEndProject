@@ -10,14 +10,50 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Product.hasMany(models.Category);
-    }
+      Product.belongsTo(models.Category);
+      Product.belongsToMany(models.Order,{
+        through:models.OrderProduct
+        })
+        }
   }
   Product.init({
-    name: DataTypes.STRING,
-    price: DataTypes.FLOAT,
-    description: DataTypes.STRING,
-    CategoryId: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Por favor introduce el nombre",
+        },
+      },
+    },
+    price: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Por favor introduce el precio",
+        },
+      },
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Por favor introduce la descripcion",
+        },
+        
+      },
+    },
+    CategoryId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Por favor introduce tu Categoria",
+        },
+      },
+    },
   }, {
     sequelize,
     modelName: 'Product',
