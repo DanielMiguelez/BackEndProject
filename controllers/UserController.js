@@ -13,7 +13,7 @@ const UserController = {
         10
       );
       const user = await User.create({ ...req.body, password });
-      res.status(201).send({ msg: "user succesfully created", user });
+      res.status(201).send({ msg: "Usuario creado satisfactoriamente", user });
     } catch (error) {
       console.error(error);
       next(error);
@@ -43,7 +43,7 @@ const UserController = {
       const token = jwt.sign({ id: user.id }, jwt_secret);
       Token.create({ token, UserId: user.id });
 
-      res.send({ message: "Welcome " + user.name, user, token });
+      res.send({ message: "Bienvenido " + user.name, user, token });
     });
   },
 
@@ -58,10 +58,10 @@ const UserController = {
         },
       });
 
-      res.send({ message: "Succesfully disconected" });
+      res.send({ message: "Desconectado satisfactoriamente" });
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: "There was a problem login out" });
+      res.status(500).send({ message: "Ha habido un problema con el logout" });
     }
   },
 
@@ -80,26 +80,17 @@ const UserController = {
               },
             ],
           },
+          
         ],
         
       });
       res.status(200).send(users);
     } catch (error) {
       console.error(error);
-      res.status(500).send({ msg: "There was an error getting user", error });
+      res.status(500).send({ msg: "No hemos podido ayudarte con la solicitud", error });
     }
   },
-  async getUserWithOrdersById(req, res) {
-    try {
-      const user = await user.findByPk(req.params.id, {});
-      res.send(user);
-    } catch (error) {
-      console.error(err);
-      res
-        .status(500)
-        .send({ msg: "Hubo un error al crear el producto", err });
-    }
-  },
+   
 
 };
 

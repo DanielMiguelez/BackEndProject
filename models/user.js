@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
 
         validate: {
           notNull: {
-            msg: "Please type your name",
+            msg: "Por favor, introduce tu apellido",
           },
         },
       },
@@ -42,11 +42,11 @@ module.exports = (sequelize, DataTypes) => {
 
         validate: {
           notNull: {
-            msg: "Please type yuor e-mail",
+            msg: "Por favor, introduce tu email",
           },
 
           isEmail: {
-            msg: "It has to be a valid e-mail",
+            msg: "Tiene que ser un email válido",
           },
         },
       },

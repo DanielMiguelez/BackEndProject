@@ -92,10 +92,10 @@ async getCategoriesAndProducts(req, res) {
     const categories = await Category.findAll({
       include: [{ model: Product, attributes: ["name","price"] }],
     });
-    res.send({ msg: "Your Categories and products", categories });
+    res.send({ msg: "Tus categorias y tus productos", categories });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ msg: "Error while getting Categories with products", error });
+    res.status(500).send({ msg: "Error el traer categorias y productos", error });
   }}
 
 };
