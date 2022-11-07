@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         
       },
     },
-    categoryId: {
+    CategoryId: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {

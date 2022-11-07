@@ -3,7 +3,7 @@ const router = express.Router();
 const ProductController = require('../controllers/ProductController')
  
 
-const {authentication} = require('../middleware/authentication')
+const {authentication} = require('../middlewares/authentication')
 
 router.post('/',authentication,ProductController.create)
 router.put('/updateProductById/:id',authentication,ProductController.updateProductById)
