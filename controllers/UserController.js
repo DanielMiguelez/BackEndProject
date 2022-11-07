@@ -1,8 +1,8 @@
-const { User, Order,Product,Token, sequelize } = require("../models/index.js");
+const { User, Order,Product,Token, Sequelize } = require("../models/index.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config/config.json")["development"];
-const { Op } = sequelize;
+const { Op } = Sequelize;
 
 const UserController = {
   async create(req, res, next) {
