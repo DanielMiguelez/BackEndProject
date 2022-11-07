@@ -72,7 +72,7 @@ const ProductController = {
       console.error(err);
       res
         .status(500)
-        .send({ msg: "Hubo un error al crear la publicación", err });
+        .send({ msg: "Hubo un error al crear el producto", err });
     }
   },
 

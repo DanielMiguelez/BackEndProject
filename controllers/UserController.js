@@ -1,4 +1,4 @@
-const { User, Token, sequelize } = require("../models/index.js");
+const { User, Order,Product,Token, sequelize } = require("../models/index.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config/config.json")["development"];
@@ -64,6 +64,43 @@ const UserController = {
       res.status(500).send({ message: "There was a problem login out" });
     }
   },
+
+  async getUserWithOrderById(req, res) {
+    try {
+      const users = await User.findByPk(req.user.id,{
+        attributes: { exclude: ["password", "role", "createdAt", "updatedAt"] },
+        include: [
+          {
+            model: Order,
+            attributes: ["id", "date","status"],
+            include: [
+              {
+                model: Product,
+                attributes: { exclude: ["createdAt", "updatedAt"] },
+              },
+            ],
+          },
+        ],
+        
+      });
+      res.status(200).send(users);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ msg: "There was an error getting user", error });
+    }
+  },
+  async getUserWithOrdersById(req, res) {
+    try {
+      const user = await user.findByPk(req.params.id, {});
+      res.send(user);
+    } catch (error) {
+      console.error(err);
+      res
+        .status(500)
+        .send({ msg: "Hubo un error al crear el producto", err });
+    }
+  },
+
 };
 
 module.exports = UserController;
