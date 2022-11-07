@@ -17,6 +17,7 @@ const handleValidationError = (err, res) => {
 };
 
 const typeError = (err, req, res, next) => {
+  console.error(err)
   if (
     err.name === "SequelizeValidationError" ||
     err.name === "SequelizeUniqueConstraintError"

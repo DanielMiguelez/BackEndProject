@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: {
         type: DataTypes.STRING,
+
         allowNull: false,
+
         validate: {
           notNull: {
             msg: "Por favor introduce tu nombre",
@@ -24,53 +26,33 @@ module.exports = (sequelize, DataTypes) => {
       },
       surname: {
         type: DataTypes.STRING,
+
         allowNull: false,
+
         validate: {
           notNull: {
-            msg: "Por favor introduce tu apellido",
+            msg: "Please type your name",
           },
         },
       },
       email: {
         type: DataTypes.STRING,
+
         allowNull: false,
+
         validate: {
           notNull: {
-            msg: "Por favor introduce tu correo",
+            msg: "Please type yuor e-mail",
           },
+
           isEmail: {
-            msg: "Por favor introduce un correo valido",
+            msg: "It has to be a valid e-mail",
           },
         },
       },
-      
-      role: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Por favor introduce tu rol",
-          },
-        },
-      },
-      gender: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Por favor introduce tu genero",
-          },
-        },
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Por favor introduce la contraseña",
-          },
-        },
-      },
+      role: DataTypes.STRING,
+      gender: DataTypes.STRING,
+      password: DataTypes.STRING,
     },
     {
       sequelize,

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
+const { typeError } = require('./middlewares/errors');
 const PORT = 8000;
-const { typeError } = require('./middleware/errors');
 
 app.use (express.json()) 
 app.use('/users', require('./routes/users'));

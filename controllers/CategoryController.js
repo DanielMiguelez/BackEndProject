@@ -2,6 +2,7 @@ const { Category, Sequelize, Product } = require("../models/index.js");
 const {Op} = Sequelize
 
 const CategoryController = {
+  
   create(req, res) {
     console.log(req.body)
     Category.create(req.body)
@@ -80,7 +81,7 @@ const CategoryController = {
       console.error(error);
       res
         .status(500)
-        .send({ msg: "Hubo un error al buscar la categoria por nombre", err });
+        .send({ msg: "Hubo un error al buscar la categoría", err });
     }
   },
 
