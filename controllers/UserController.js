@@ -64,6 +64,11 @@ const UserController = {
       res.status(500).send({ message: "There was a problem login out" });
     }
   },
+
 };
+
+
+
+
 
 module.exports = UserController;
