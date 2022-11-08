@@ -1,4 +1,4 @@
-#PROYECTO DE BACK END CON SEQUELIZE DE DANIEL Y DIEGO 😀🎓
+# PROYECTO DE BACK END CON SEQUELIZE DE DANIEL Y DIEGO 😀🎓
 
 En este proyecto hemos puesto en practica lo aprendido durante las ultimas dos semanas, entre los conocimientos adquiridos y puestoes en practica podemos destacar los siguientes:
 
@@ -12,7 +12,7 @@ Y a destacar entre llo aprendido, lo imprescindible:
 
 ● Uso de ramas con git, cuando se termine el proyecto deberán quedar dos ramas la master o main y la develop.
 
-##TECNOLOGIAS EMPLEADAS EN ESTE PROYECTO 👷🏿🦾
+## TECNOLOGIAS EMPLEADAS EN ESTE PROYECTO 👷🏿🦾
 
 Hemos utilizado las siguientes herramientas, aprendidas de la mano de nuestoros profesores de The Bridge, Sofia Pinilla y Germán Molero:
 
